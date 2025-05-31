@@ -15,25 +15,28 @@ export default function MovieModal({ movie, onClose }: MovieModalProps) {
       }
     };
 
-    const handleClickOutside = (e: MouseEvent) => {
-      if ((e.target as HTMLElement).classList.contains(styles.backdrop)) {
-        onClose();
-      }
-    };
-
     document.body.style.overflow = 'hidden';
     window.addEventListener('keydown', handleKeyDown);
-    window.addEventListener('click', handleClickOutside);
 
     return () => {
       document.body.style.overflow = '';
       window.removeEventListener('keydown', handleKeyDown);
-      window.removeEventListener('click', handleClickOutside);
     };
   }, [onClose]);
 
+  const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  };
+
   return (
-    <div className={styles.backdrop} role="dialog" aria-modal="true">
+    <div
+      className={styles.backdrop}
+      role="dialog"
+      aria-modal="true"
+      onClick={handleBackdropClick}
+    >
       <div className={styles.modal}>
         <button className={styles.closeButton} onClick={onClose} aria-label="Close modal">
           &times;
