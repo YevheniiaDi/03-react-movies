@@ -21,11 +21,11 @@ function App() {
     setMovies([]);
 
     try {
-      const results = await fetchMovies(query);
-      if (results.length === 0) {
+      const data = await fetchMovies(query); // TMDBSearchResponse
+      if (data.results.length === 0) {
         toast.error('No movies found for your request.');
       }
-      setMovies(results);
+      setMovies(data.results);
     } catch (err) {
       setError(true);
     } finally {
