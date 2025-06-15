@@ -11,6 +11,12 @@ export default function SearchBar({ onSubmit }: SearchBarProps) {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
+
+    // 🔍 Діагностика: показати всі поля форми
+    for (const [key, value] of formData.entries()) {
+      console.log(`${key}: ${value}`);
+    }
+
     const query = (formData.get('query') as string).trim();
 
     if (!query) {
@@ -19,7 +25,7 @@ export default function SearchBar({ onSubmit }: SearchBarProps) {
     }
 
     onSubmit(query);
-    e.currentTarget.reset(); // очищає поле після сабміту
+    e.currentTarget.reset(); // очищення поля після сабміту
   };
 
   return (
@@ -33,11 +39,11 @@ export default function SearchBar({ onSubmit }: SearchBarProps) {
         >
           Powered by TMDB
         </a>
-        <form className={styles.form} onSubmit={handleSubmit} action="#">
+        <form className={styles.form} onSubmit={handleSubmit}>
           <input
             className={styles.input}
             type="text"
-            name="query"
+            name="query" // 🔑 ключ для FormData
             autoComplete="off"
             placeholder="Search movies..."
             autoFocus
